@@ -24,6 +24,12 @@ tasks.withType(JavaExec) {
     jvmArgs += "--enable-preview"
 }
 
+jacocoTestReport {
+    reports {
+        csv.enabled true
+    }
+}
+
 dependencies {
     testImplementation "junit:junit:4.12"
 }
