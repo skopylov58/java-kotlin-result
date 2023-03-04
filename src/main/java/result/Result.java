@@ -97,20 +97,20 @@ public sealed interface Result<T> permits Success, Failure {
     <R> R fold(Function<? super T, ? extends R> onSuccess, Function<? super Exception, ? extends R> onError);
     
     
-    @FunctionalInterface
     /**Supplier that may throw an exception */
+    @FunctionalInterface
     interface CheckedSupplier<T> {T get() throws Exception;}
     
-    @FunctionalInterface
     /**Function that may throw an exception */
+    @FunctionalInterface
     interface CheckedFunction<T, R> {R apply(T t) throws Exception;}
 
-    @FunctionalInterface
     /**Consumer that may throw an exception */
+    @FunctionalInterface
     interface CheckedConsumer<T> {void accept(T t) throws Exception;}
 
-    @FunctionalInterface
     /**Runnable that may throw an exception */
+    @FunctionalInterface
     interface CheckedRunnable {void run() throws Exception;}
 
     /**
