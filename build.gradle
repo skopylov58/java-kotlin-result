@@ -26,7 +26,7 @@ tasks.withType(JavaExec) {
 
 jacocoTestReport {
     reports {
-        csv.required true
+        csv.required = true
     }
 }
 
