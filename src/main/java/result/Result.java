@@ -98,22 +98,36 @@ public sealed interface Result<T> permits Success, Failure {
     
     
     @FunctionalInterface
+    /**Supplier that may throw an exception */
     interface CheckedSupplier<T> {T get() throws Exception;}
     
     @FunctionalInterface
+    /**Function that may throw an exception */
     interface CheckedFunction<T, R> {R apply(T t) throws Exception;}
 
     @FunctionalInterface
+    /**Consumer that may throw an exception */
     interface CheckedConsumer<T> {void accept(T t) throws Exception;}
 
     @FunctionalInterface
+    /**Runnable that may throw an exception */
     interface CheckedRunnable {void run() throws Exception;}
 
-    
-    static <T> Result<T> of(CheckedSupplier<T> suppl) {
-        return lift(toFunction(suppl)).apply(null);
+    /**
+     * Factory method to produce Result from supplier that may throw an exception.
+     * @param <T> Result type
+     * @param supplier supplier that may throw an exception.
+     * @return {@code Result<T>}
+     */
+    static <T> Result<T> of(CheckedSupplier<T> supplier) {
+        return lift(toFunction(supplier)).apply(null);
     }
 
+    /**
+     * Factory method to produce Result from runnable that may throw an exception/
+     * @param runnable runnable
+     * @return Result<Void>
+     */
     static Result<Void> of(CheckedRunnable runnable) {
         return lift(toFunction(runnable)).apply(null);
     }
