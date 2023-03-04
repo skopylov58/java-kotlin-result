@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"result","l":"Result.CheckedConsumer"},{"p":"result","l":"Result.CheckedFunction"},{"p":"result","l":"Result.CheckedRunnable"},{"p":"result","l":"Result.CheckedSupplier"},{"p":"result","l":"Failure"},{"p":"result","l":"Result"},{"p":"result","l":"Success"}];updateSearchResults();
