@@ -126,7 +126,7 @@ public sealed interface Result<T> permits Success, Failure {
     /**
      * Factory method to produce Result from runnable that may throw an exception/
      * @param runnable runnable
-     * @return Result<Void>
+     * @return {@code Result<Void>}
      */
     static Result<Void> of(CheckedRunnable runnable) {
         return lift(toFunction(runnable)).apply(null);
