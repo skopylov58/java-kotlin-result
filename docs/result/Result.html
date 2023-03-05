@@ -196,16 +196,6 @@ R&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;R&gt;&nbsp;<a href="Result.html" title="interface in result">Result</a>&lt;R&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#mapCatching(result.Result.CheckedFunction)" class="member-name-link">mapCatching</a><wbr>(<a href="Result.CheckedFunction.html" title="interface in result">Result.CheckedFunction</a>&lt;? super <a href="Result.html" title="type parameter in Result">T</a>,<wbr>? extends R&gt;&nbsp;mapper)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="Result.html" title="interface in result">Result</a>&lt;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(result.Result.CheckedRunnable)" class="member-name-link">of</a><wbr>(<a href="Result.CheckedRunnable.html" title="interface in result">Result.CheckedRunnable</a>&nbsp;runnable)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
-<div class="block">Factory method to produce Result from runnable that may throw an exception/</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static &lt;T&gt;&nbsp;<a href="Result.html" title="interface in result">Result</a>&lt;T&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(result.Result.CheckedSupplier)" class="member-name-link">of</a><wbr>(<a href="Result.CheckedSupplier.html" title="interface in result">Result.CheckedSupplier</a>&lt;T&gt;&nbsp;supplier)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
-<div class="block">Factory method to produce Result from supplier that may throw an exception.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="Result.html" title="interface in result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">T</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onFailure(java.util.function.Consumer)" class="member-name-link">onFailure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;&nbsp;errHandler)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
@@ -226,6 +216,16 @@ R&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;R&gt;&nbsp;<a href="Result.html" title="interface in result">Result</a>&lt;R&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#recoverCatching(result.Result.CheckedFunction)" class="member-name-link">recoverCatching</a><wbr>(<a href="Result.CheckedFunction.html" title="interface in result">Result.CheckedFunction</a>&lt;? super <a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>,<wbr>? extends R&gt;&nbsp;func)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="Result.html" title="interface in result">Result</a>&lt;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#runCatching(result.Result.CheckedRunnable)" class="member-name-link">runCatching</a><wbr>(<a href="Result.CheckedRunnable.html" title="interface in result">Result.CheckedRunnable</a>&nbsp;runnable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">Factory method to produce Result from runnable that may throw an exception/</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static &lt;T&gt;&nbsp;<a href="Result.html" title="interface in result">Result</a>&lt;T&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#runCatching(result.Result.CheckedSupplier)" class="member-name-link">runCatching</a><wbr>(<a href="Result.CheckedSupplier.html" title="interface in result">Result.CheckedSupplier</a>&lt;T&gt;&nbsp;supplier)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">Factory method to produce Result from supplier that may throw an exception.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a>&lt;<a href="Result.html" title="type parameter in Result">T</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#stream()" class="member-name-link">stream</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
@@ -405,9 +405,9 @@ R&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base
 </section>
 </li>
 <li>
-<section class="detail" id="of(result.Result.CheckedSupplier)">
-<h3>of</h3>
-<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interface in result">Result</a>&lt;T&gt;</span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="Result.CheckedSupplier.html" title="interface in result">Result.CheckedSupplier</a>&lt;T&gt;&nbsp;supplier)</span></div>
+<section class="detail" id="runCatching(result.Result.CheckedSupplier)">
+<h3>runCatching</h3>
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interface in result">Result</a>&lt;T&gt;</span>&nbsp;<span class="element-name">runCatching</span><wbr><span class="parameters">(<a href="Result.CheckedSupplier.html" title="interface in result">Result.CheckedSupplier</a>&lt;T&gt;&nbsp;supplier)</span></div>
 <div class="block">Factory method to produce Result from supplier that may throw an exception.</div>
 <dl class="notes">
 <dt>Type Parameters:</dt>
@@ -420,9 +420,9 @@ R&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base
 </section>
 </li>
 <li>
-<section class="detail" id="of(result.Result.CheckedRunnable)">
-<h3>of</h3>
-<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="Result.html" title="interface in result">Result</a>&lt;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="Result.CheckedRunnable.html" title="interface in result">Result.CheckedRunnable</a>&nbsp;runnable)</span></div>
+<section class="detail" id="runCatching(result.Result.CheckedRunnable)">
+<h3>runCatching</h3>
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="Result.html" title="interface in result">Result</a>&lt;<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">runCatching</span><wbr><span class="parameters">(<a href="Result.CheckedRunnable.html" title="interface in result">Result.CheckedRunnable</a>&nbsp;runnable)</span></div>
 <div class="block">Factory method to produce Result from runnable that may throw an exception/</div>
 <dl class="notes">
 <dt>Parameters:</dt>
