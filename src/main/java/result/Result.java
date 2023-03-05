@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public sealed interface Result<T> permits Success, Failure {
     
-    final Exception NO_SUCH_ELEMENT = new NoSuchElementException();
+    Exception NO_SUCH_ELEMENT = new NoSuchElementException();
     
     @SuppressWarnings("unchecked")
     default <R> Result<R> map(Function<? super T, ? extends R> mapper) {
@@ -119,7 +119,7 @@ public sealed interface Result<T> permits Success, Failure {
      * @param supplier supplier that may throw an exception.
      * @return {@code Result<T>}
      */
-    static <T> Result<T> of(CheckedSupplier<T> supplier) {
+    static <T> Result<T> runCatching(CheckedSupplier<T> supplier) {
         return lift(toFunction(supplier)).apply(null);
     }
 
@@ -128,7 +128,7 @@ public sealed interface Result<T> permits Success, Failure {
      * @param runnable runnable
      * @return {@code Result<Void>}
      */
-    static Result<Void> of(CheckedRunnable runnable) {
+    static Result<Void> runCatching(CheckedRunnable runnable) {
         return lift(toFunction(runnable)).apply(null);
     }
     

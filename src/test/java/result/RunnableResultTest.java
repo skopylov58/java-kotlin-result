@@ -9,13 +9,13 @@ public class RunnableResultTest {
     @Test
     public void testRunnable() throws Exception {
         
-        Result<Void> run = Result.of(() -> System.out.println("Runnable"));
+        Result<Void> run = Result.runCatching(() -> System.out.println("Runnable"));
         assertTrue(run.isSuccess());
         Void v = run.getOrNull();
         assertNull(v);
         
         switch(run) {
-        case Success<Void>(Void val) -> assertNull(val);
+        case Success<Void> s -> assertNull(s.value());
         case Failure f -> fail();
         default -> fail();
         }

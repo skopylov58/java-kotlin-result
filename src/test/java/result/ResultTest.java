@@ -13,6 +13,7 @@ import java.util.function.Function;
 import org.junit.Test;
 
 import result.Result.CheckedFunction;
+import static result.Result.*;
 
 public class ResultTest {
     
@@ -20,7 +21,7 @@ public class ResultTest {
     @Test
     public void testSwitch() throws Exception {
         
-        Result<Integer> result = Result.of(this::getInt);
+        Result<Integer> result = runCatching(this::getInt);
 
         if (result instanceof Success<Integer>(var i)) {
             System.out.println(i);
@@ -112,13 +113,13 @@ public class ResultTest {
     }
     
     Permission[] getPermissionsById(long userId) {
-        return Result.of(() -> getUserPrincipalById(userId))
+        return runCatching(() -> getUserPrincipalById(userId))
         .mapCatching(this::getUserPermissions)
         .fold(Function.identity(), e -> null);
     }
 
     Permission[] getPermissionsById_00(long userId) {
-        return Result.of(() -> getUserPermissions(getUserPrincipalById(userId)))
+        return runCatching(() -> getUserPermissions(getUserPrincipalById(userId)))
         .fold(x -> x, e -> null); //x->x is identity function
     }
 
@@ -132,14 +133,14 @@ public class ResultTest {
 
     @SuppressWarnings("preview")
     Permission[] getPermissionsById_2(long userId) {
-        return switch(Result.of(() -> getUserPermissions(getUserPrincipalById(userId)))) {
+        return switch(Result.runCatching(() -> getUserPermissions(getUserPrincipalById(userId)))) {
             case Success<Permission[]>(Permission[] perms) -> perms;
             default -> null;
         };
     }
 
     Permission[] getPermissionsById_3(long userId) {
-        var result = Result.of(() -> getUserPrincipalById(userId)).mapCatching(this::getUserPermissions);
+        var result = runCatching(() -> getUserPrincipalById(userId)).mapCatching(this::getUserPermissions);
         return switch (result) {
         case Success<Permission[]>(Permission[] perms) -> perms;
         default -> null;
@@ -148,7 +149,7 @@ public class ResultTest {
     
     @Test
     public void testUrl() {
-        var urlResult = Result.of(() -> new URL("foo/bar"));
+        var urlResult = Result.runCatching(() -> new URL("foo/bar"));
         assertTrue(urlResult instanceof Failure);
         urlResult.onFailure(e -> assertTrue(e instanceof MalformedURLException));
     }
@@ -166,7 +167,7 @@ public class ResultTest {
     
     //Extracts host portion of URL
     Optional<Integer> getURLPortWithSimplePatternMatching(String url) {
-        var portResult = Result.of(() -> new URL(url)).map(URL::getPort);
+        var portResult = Result.runCatching(() -> new URL(url)).map(URL::getPort);
         return switch (portResult) {
         case Success<Integer> s -> s.value() == -1 ? Optional.empty() : Optional.of(s.value());
         case Failure f -> Optional.empty();
@@ -175,7 +176,7 @@ public class ResultTest {
 
     //Extracts host portion of URL
     Optional<Integer> getURLPortWithRecordMatching(String url) {
-        var portResult = Result.of(() -> new URL(url)).map(URL::getPort);
+        var portResult = Result.runCatching(() -> new URL(url)).map(URL::getPort);
         return switch (portResult) {
         case Success<Integer>(Integer port) -> port == -1 ? Optional.empty() : Optional.of(port);
         case Failure f -> Optional.empty();
@@ -185,7 +186,7 @@ public class ResultTest {
 
     //Extracts host portion of URL
     Optional<Integer> getURLPortWithRecordMatchingInfere(String url) {
-        var portResult = Result.of(() -> new URL(url)).map(URL::getPort);
+        var portResult = Result.runCatching(() -> new URL(url)).map(URL::getPort);
         return switch (portResult) {
         case Success<Integer>(Integer port) -> port == -1 ? Optional.empty() : Optional.of(port);
         case Failure f -> Optional.empty();
@@ -195,7 +196,7 @@ public class ResultTest {
 
     //Extracts host portion of URL
     Optional<Integer> getURLPortWithMonad(String url) {
-        return Result.of(() -> new URL(url)).map(URL::getPort)
+        return Result.runCatching(() -> new URL(url)).map(URL::getPort)
             .filter(port -> port != -1)
             .fold(port -> Optional.of(port), exception -> Optional.empty());
     }
