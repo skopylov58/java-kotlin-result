@@ -1,33 +1,39 @@
 package result;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public record Failure<T>(Exception exception) implements Result<T> {
 
-    private transient static final Consumer<Exception> interceptor;
+    private static AtomicReference<Consumer<Exception>> interceptorRef = new AtomicReference<>();
     
-    static {
-        String className = System.getProperty("result.interceptor");
-        if (className != null) {
-            try {
-                interceptor = (Consumer<Exception>) Class.forName(className).getConstructor().newInstance();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            interceptor = null; 
-        }
-    }
-    
+    /**
+     * Customizing constructor. Invokes exception intercepter if it is set.
+     */
     public Failure {
-        if (interceptor != null) {
-            interceptor.accept(exception);
+        Consumer<Exception> interc = interceptorRef.get();
+        if (interc != null) {
+            interc.accept(exception);
         }
     }
-    
+    /**
+     * Factory method to produce Failure result.
+     * @param <T> result type
+     * @param e exception
+     * @return Failure result
+     */
     static <T> Result<T> of(Exception e) {
         return new Failure<T>(e);
+    }
+
+    /**
+     * Sets global exception interceptor.
+     * @param interceptor exception interceptor
+     * @return previous old interceptor
+     */
+    static Consumer<Exception> withInterceptor(Consumer<Exception> interceptor) {
+        return interceptorRef.getAndSet(interceptor);
     }
     
     @Override

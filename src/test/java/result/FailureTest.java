@@ -1,12 +1,10 @@
 package result;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -113,5 +111,30 @@ public class FailureTest {
         var filtered = f.filter(i -> i > 0);
         assertEquals(f, filtered);
     }
-
+    
+    @Test
+    public void testIntercepter() throws Exception {
+        Consumer<Exception> logException = e -> {
+            Logger logger = System.getLogger("result");
+            Level level = e instanceof RuntimeException ? Level.WARNING : Level.TRACE;
+            logger.log(level, e.getMessage(), e);
+        };
+        
+        Consumer<Exception> banNPE = e -> {
+            if (e instanceof NullPointerException npe) {
+                throw npe;
+            }
+        };
+        Failure.withInterceptor(logException.andThen(banNPE));
+        
+        try {
+            var f = Failure.of(new NullPointerException("Some message"));
+            fail("Shold throw NPE");
+        } catch (NullPointerException npe) {
+            //ok
+        }
+        
+        Failure.withInterceptor(null);
+    }
+    
 }
