@@ -129,7 +129,7 @@ implements <a href="Result.html" title="interface in result">Result</a>&lt;T&gt;
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Exception)" class="member-name-link">Failure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;exception)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates an instance of a <code>Failure</code> record class.</div>
+<div class="block">Customizing constructor.</div>
 </div>
 </div>
 </section>
@@ -196,11 +196,7 @@ implements <a href="Result.html" title="interface in result">Result</a>&lt;T&gt;
 <section class="detail" id="&lt;init&gt;(java.lang.Exception)">
 <h3>Failure</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Failure</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;exception)</span></div>
-<div class="block">Creates an instance of a <code>Failure</code> record class.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>exception</code> - the value for the <code>exception</code> record component</dd>
-</dl>
+<div class="block">Customizing constructor. Invokes exception intercepter if it is set.</div>
 </section>
 </li>
 </ul>
