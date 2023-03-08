@@ -71,11 +71,9 @@ public record Failure<T>(Exception exception) implements Result<T> {
 Для получения результата можно использовать производящую (factory) функцию
 
 ```java
-    static <T> Result<T> of(CheckedSupplier<T> suppl) {
+    static <T> Result<T> runCatching(CheckedSupplier<T> suppl) {
         try {
             return new Success<>(suppl.get());
-        } catch (RuntimeException re) {
-            throw re;  //Consider runtime exceptions are bugs
         } catch (Exception e) {
             return new Failure<>(e);
         }
@@ -86,7 +84,7 @@ public record Failure<T>(Exception exception) implements Result<T> {
 
 ```java
     @Test public void testUrl() {
-        var urlResult = Result.of(() -> new URL("foo/bar"));
+        var urlResult = Result.runCatching(() -> new URL("foo/bar"));
         assertTrue(urlResult instanceof Failure);
         urlResult.onFailure(e -> assertTrue(e instanceof MalformedURLException));
     }
@@ -115,7 +113,7 @@ public record Failure<T>(Exception exception) implements Result<T> {
 
 ```java
     Optional<Integer> getURLPortWithSimplePatternMatching(String url) {
-        var portResult = Result.of(() -> new URL(url)).map(URL::getPort);
+        var portResult = runCatching(() -> new URL(url)).map(URL::getPort);
         return switch (portResult) {
         case Success<Integer> s -> s.value() == -1 ? Optional.empty() : Optional.of(s.value());
         case Failure f -> Optional.empty();
@@ -128,7 +126,7 @@ public record Failure<T>(Exception exception) implements Result<T> {
 
 ```java
     Optional<Integer> getURLPortWithRecordMatching(String url) {
-        var portResult = Result.of(() -> new URL(url)).map(URL::getPort);
+        var portResult = runCatching(() -> new URL(url)).map(URL::getPort);
         return switch (portResult) {
         case Success<Integer>(Integer port) -> port == -1 ? Optional.empty() : Optional.of(port);
         case Failure f -> Optional.empty();
@@ -141,7 +139,7 @@ public record Failure<T>(Exception exception) implements Result<T> {
 
 ```java
     Optional<Integer> getURLPortWithRecordMatchingInfere(String url) {
-        var portResult = Result.of(() -> new URL(url)).map(URL::getPort);
+        var portResult = runCatching(() -> new URL(url)).map(URL::getPort);
         return switch (portResult) {
         case Success<Integer>(var port) -> port == -1 ? Optional.empty() : Optional.of(port);
         case Failure f -> Optional.empty();
@@ -155,7 +153,7 @@ public record Failure<T>(Exception exception) implements Result<T> {
 
 ```java
     Optional<Integer> getURLPortWithRecordMatchingInfere(String url) {
-        var portResult = Result.of(() -> new URL(url)).map(URL::getPort);
+        var portResult = runCatching(() -> new URL(url)).map(URL::getPort);
         return switch (portResult) {
         case Success(var port) -> port == -1 ? Optional.empty() : Optional.of(port);
         case Failure f -> Optional.empty();
@@ -168,7 +166,7 @@ public record Failure<T>(Exception exception) implements Result<T> {
 
 ```java
     Optional<Integer> getURLPortWithMonad(String url) {
-        return Result.of(() -> new URL(url)).map(URL::getPort)
+        return runCatching(() -> new URL(url)).map(URL::getPort)
             .filter(port -> port != -1)
             .fold(port -> Optional.of(port), exception -> Optional.empty());
     }
@@ -204,7 +202,7 @@ public record Failure<T>(Exception exception) implements Result<T> {
 
 ### 9. Комбинирование с применением pattern matching.
 
-Если нужно скомбинировать монады различных типов, например ```Result<Integer>``` и ```Option<Integer>```, то у нас есть либо наивный вариант, либо использование pattern matching.
+Если нужно скомбинировать монады различных типов, например ```Result<Integer>``` и ```Option<Integer>```, то у нас есть либо наивный вариант #7, либо привести типы к одному виду и использовать #8, либо использование pattern matching.
 
 ```java
     Result<Integer> sumResultsFromDifferentMonads(Option<Integer> i1, Result<Integer> i2) {
@@ -230,7 +228,7 @@ public record Failure<T>(Exception exception) implements Result<T> {
 ```
 На Scala покрасивей будет конечно чем в Java, но идея та же. Вместо записи ```TwoInts``` используем безымянный кортеж ```(i1, i2)```, используем символ ```"_"``` когда конкретное значение компоненты нас не интересует, то есть любое значение. Java пока не умеет игнорировать компоненты, возможно появится в будущем.
 
-Уважаемые читатели, кто знает другие FP языки. Напишите пожалуйста в комментариях как будет выглядеть последняя функция на вашем языке (Kotlin, Haskell, Rust, др.) Будет интересно сравнить с Java.
+Мне не удалось написать последнюю функцию на Kotlin. Уважаемые читатели, кто знает другие FP языки. Напишите пожалуйста в комментариях как будет выглядеть последняя функция на вашем языке (Kotlin, Haskell, Rust, др.) Будет интересно сравнить с Java.
 
 ## Проблемы
 
@@ -245,16 +243,21 @@ JEP 406 еще не финализирована, находится в 4-ой �
 
 ## Имплементация Result
 
-Я решил взять Kotlin Result как исходный образец API и портировал его в Java. С результатом можно ознакомиться в репозитарии на гитхабе.
+Я решил взять Kotlin Result как исходный образец API и портировал его в Java. С результатом можно ознакомиться в репозитории на [GitHub](https://github.com/skopylov58/java-kotlin-result). Почему Kotlin? Во первых, у Kotlin очень хорошая стандартная библиотека, во вторых - не хотелось изобретать новые API.
 
 ## Выводы
 
 В последние годы в Java идет тихая функциональная революция
 
-- С использованием запечатанных (sealed) классов и записей стало возможным эффективное моделирование данных в функциональном стиле как алгебраических типов данных (ADT).
+- С использованием запечатанных (sealed) классов и записей (records) стало возможным эффективное моделирование данных в функциональном стиле как алгебраических типов данных (ADT).
 - Сопоставление записей с образцом (records pattern matching) с одновременной деконструкцией записи на компоненты является сильной стороной функциональных языков и теперь это возможно в Java.
 
-Конечно Java не станет чистым функциональным языком, однако эти новые возможности значительно обогатят экосистему Java и удержат приверженцев языка от миграции на другие новомодные языки.
+Конечно Java не станет чистым функциональным языком, однако эти новые возможности значительно обогатят экосистему Java.
 
-Жаль только что пока в стандартной библиотеке Java нет таких функциональных примитивов как Result, Either и других.
+Хотя для меня странным выглядит то, что несмотря на большой крен в сторону FP, в стандартной библиотеке Java до сих пор нет таких функциональных примитивов как Result, Either, Option и других (```java.util.Optional``` не является запечатанным классом и не поддается декомпозиции при сопоставлении с образцом). У кого нибудь есть объяснение этому факту?
+
+С уважением   
+Сергей Копылов   
+
+
 
