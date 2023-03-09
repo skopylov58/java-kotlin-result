@@ -7,6 +7,13 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * Port of Kotlin's Result API to Java.
+ *  * 
+ * @author skopylov
+ *
+ * @param <T> result type
+ */
 public sealed interface Result<T> extends AutoCloseable permits Success, Failure {
     
     Exception NO_SUCH_ELEMENT = new NoSuchElementException();

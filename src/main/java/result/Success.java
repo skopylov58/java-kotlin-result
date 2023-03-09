@@ -2,6 +2,13 @@ package result;
 
 import java.util.function.Function;
 
+/**
+ * Success result.
+ * 
+ * @author skopylov
+ *
+ * @param <T>
+ */
 public record Success<T>(T value) implements Result<T> {
 
     public static <T> Success<T> of(T t) {

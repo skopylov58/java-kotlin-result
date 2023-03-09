@@ -4,6 +4,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * 
+ * Failure result.
+ * 
+ * @author skopylov
+ *
+ * @param <T> result type
+ */
 public record Failure<T>(Exception exception) implements Result<T> {
 
     private static AtomicReference<Consumer<Exception>> interceptorRef = new AtomicReference<>();
