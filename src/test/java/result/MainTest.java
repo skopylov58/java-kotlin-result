@@ -1,5 +1,8 @@
 package result;
 
+import java.net.URL;
+import java.util.List;
+
 public class MainTest {
     
     public void testRecordPatternMatching() throws Exception {
@@ -10,4 +13,12 @@ public class MainTest {
         }
         
     }
+    
+    List<URL> foo(List<String> urls) {
+        return urls.stream()
+        .map(Result.lift(URL::new))
+        .flatMap(Result::stream)
+        .toList();
+    }
+    
 }

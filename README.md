@@ -18,7 +18,10 @@ Why Kotlin? Why not? Kotlin has decent standard library and I do not want to inv
 
 Result does not catch any ```Throwable```s like do some libraries (Vavr for example). The reason is simple, Throwable includes Errors like OutOfMemoryError, StackOverflowError and many other errors that are considered to be un-recoverable. There is no use to catch and handle these errors, it would better stop application and fix the problem.
 
-## Handling and logging exceptions uniformly
+
+## Some add-ons to the Kotlin Result
+
+### Handling and logging exceptions uniformly
 
 In the production it is highly desireable to use uniform approach to exception logging and handling across the whole application or project. But Kotlin API (and many others) do not have means to force the user to handle exceptions uniformly. Let's look at the code below.
 
@@ -57,7 +60,7 @@ To force uniform exception handling, I have introduced exception interceptor whi
 
 ```Failure.withInterceptor``` method will set interceptor globally for JVM, and after that all Result exceptions in the application will be logged and handled in the same uniform way. Be aware that there is not any default interceptor.
 
-## Are the using of interceptors thread safe?
+### Are the using of interceptors thread safe?
 
 As per my understanding, yes, it is thread-safe as long as interceptors are pure, i.e.
 - do not have/maintain any own internal state
@@ -65,7 +68,6 @@ As per my understanding, yes, it is thread-safe as long as interceptors are pure
 
 You may say that exception logging is a side effect, and this is correct from theoretical point of view. But practically all logging libraries I have met are thread safe.
 
-## Some add-ons to the Kotlin Result
 
 ### Integration with Java's Optional and Stream
 
