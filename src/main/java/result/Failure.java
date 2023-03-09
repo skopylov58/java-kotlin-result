@@ -45,5 +45,9 @@ public record Failure<T>(Exception exception) implements Result<T> {
     public T getOrThrow() throws Exception {
         throw exception;
     }
+    @Override
+    public void close() {
+        // nothing to close
+    }
 
 }

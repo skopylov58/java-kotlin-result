@@ -18,4 +18,14 @@ public record Success<T>(T value) implements Result<T> {
         return value;
     }
 
+    @Override
+    public void close() {
+        if (value instanceof AutoCloseable auto) {
+            try {
+                auto.close();
+            } catch (Exception e) {
+                Failure.of(e);  //
+            }
+        }
+    }
 }

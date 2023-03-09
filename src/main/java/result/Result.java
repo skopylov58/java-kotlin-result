@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public sealed interface Result<T> permits Success, Failure {
+public sealed interface Result<T> extends AutoCloseable permits Success, Failure {
     
     Exception NO_SUCH_ELEMENT = new NoSuchElementException();
     

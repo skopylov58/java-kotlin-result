@@ -1,11 +1,14 @@
 package result;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.FileNotFoundException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -113,7 +116,7 @@ public class FailureTest {
     }
     
     @Test
-    public void testIntercepter() throws Exception {
+    public void testInterceptor() throws Exception {
         Consumer<Exception> logException = e -> {
             Logger logger = System.getLogger("result");
             Level level = e instanceof RuntimeException ? Level.WARNING : Level.TRACE;
