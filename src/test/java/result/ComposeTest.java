@@ -1,29 +1,11 @@
 package result;
 
-import junit.framework.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 public class ComposeTest {
-
-
-//    @org.junit.Test
-//    public void test0() throws Exception {
-//        
-//        var opt1 = Optional.of(1);
-//        var opt2 = Optional.of(2);
-//        
-//        
-//        record Product(Optional<Integer> i1, Optional<Integer> i2) {};
-//        
-//        var pr = new Product(opt1, opt2);
-//        var s = switch (pr) {
-//            case Product(Optional.of(var i1), Optional.of(var i2)) -> "";
-//            default -> "";
-//        };
-//    }
 
     sealed interface Option<T> permits Some, None {}
     record Some<T>(T value) implements Option<T> {}
@@ -34,15 +16,15 @@ public class ComposeTest {
         
         var res1 = Success.of(1);
         var res2 = Success.of(2);
-        
-        
-        record Product(Result<Integer> i1, Result<Integer> i2) {};
-        
-        var pr = new Product(res1, res2);
-        var s = switch (pr) {
-            case Product(Success<Integer>(Integer i1), Success<Integer>(Integer i2)) -> "";
-            default -> "";
-        };
+
+        Result<Integer> sum = sumResultsNaive(res1, res2);
+        assertTrue(sum.isSuccess());
+        assertEquals(3, sum.getOrNull().intValue());
+
+        sum = sumResultsFlatMap(res1, res2);
+        assertTrue(sum.isSuccess());
+        assertEquals(3, sum.getOrNull().intValue());
+
     }
 
     Result<Integer> sumResultsNaive(Result<Integer> i1, Result<Integer> i2) {
