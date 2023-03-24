@@ -93,3 +93,5 @@ Result implements AutoCloseable interface and could be used in the try-with-reso
             .onFailure(e -> System.out.println(e));
         };
 ```
+
+[See alse article on habr.com](https://habr.com/ru/post/721326/)
