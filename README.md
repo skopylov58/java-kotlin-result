@@ -3,6 +3,7 @@
 ![example workflow](https://github.com/skopylov58/java-kotlin-result/actions/workflows/gradle.yml/badge.svg)
 [![Coverage](.github/badges/jacoco.svg)](https://github.com/skopylov58/java-kotlin-result/actions/workflows/gradle.yml)
 [![Javadoc](https://img.shields.io/badge/JavaDoc-Online-green)](https://skopylov58.github.io/java-kotlin-result/)
+[![Habr.com publication](https://badgen.net/badge/habr.com/publication/green)](https://habr.com/ru/post/721326/)
 
 # Port of the Kotlin Result API to the Java
 
@@ -94,4 +95,3 @@ Result implements AutoCloseable interface and could be used in the try-with-reso
         };
 ```
 
-[See also article on habr.com](https://habr.com/ru/post/721326/)
