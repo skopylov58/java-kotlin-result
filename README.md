@@ -94,4 +94,4 @@ Result implements AutoCloseable interface and could be used in the try-with-reso
         };
 ```
 
-[See alse article on habr.com](https://habr.com/ru/post/721326/)
+[See also article on habr.com](https://habr.com/ru/post/721326/)
